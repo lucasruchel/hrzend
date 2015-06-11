@@ -14,7 +14,6 @@ return array(
         'Jobs',
         'Departments',
         'Regions',
-        'Locations',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
