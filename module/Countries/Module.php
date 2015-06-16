@@ -1,10 +1,12 @@
 <?php
 namespace Countries;
- use Countries\Model\Countries;
- 
- use Countries\Model\CountriesTable;
+use Countries\Model\Countries;
+use Countries\Model\CountriesTable;
 
- use Zend\Db\TableGateway\TableGateway;
+use Regions\Model\Regions;
+use Regions\Model\RegionsTable;
+
+use Zend\Db\TableGateway\TableGateway;
 
 use Zend\Stdlib\Hydrator\ObjectProperty;
 use Zend\Db\ResultSet\HydratingResultSet;
@@ -45,6 +47,21 @@ class Module
                      $resultSetPrototype->setObjectPrototype(new Countries());
                      
                      return new TableGateway('countries', $dbAdapter, null, $resultSetPrototype);
+                },
+                        'Regions\Model\RegionsTable' =>  function($sm) {
+                     $tableGateway = $sm->get('RegionsTableGateway');
+                     $table = new RegionsTable($tableGateway);
+                     return $table;
+                 },
+                 'RegionsTableGateway' => function ($sm) {
+                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                     
+                     
+                     $resultSetPrototype = new HydratingResultSet();
+                     $resultSetPrototype->setHydrator(new ObjectProperty());
+                     $resultSetPrototype->setObjectPrototype(new Regions());
+                     
+                     return new TableGateway('regions', $dbAdapter, null, $resultSetPrototype);
                 },
             ),
         );

@@ -1,8 +1,44 @@
-Action "index", controller "Countries", module "Countries".
-
 <?php
+    $title = 'Países';
+    $this->headTitle($title);
+?>
 
-foreach ($countries as $country){
-    echo Zend\Debug\Debug::dump($country);
-}
+<h1><?php echo $this->escapeHtml($title) ?></h1>
+
+<div class="label">
+     <a class="btn btn-primary" href="<?php echo $this->url('countries', array('action'=>'add'));?>">Adicionar Novo País</a>
+</div>
+
+<hr>
+<table class="table table-responsive">
+    <tr>
+        <th> ID </th>
+        <th> Nome do País</th>
+        <th> Id da Região</th>
+        <th> Nome da Região</th>
+        <th> &nbsp;</th>
+    </tr>
+    
+<?php foreach ($this->countries as $country):?>
+    <tr>
+        <td> <?php echo $country->country_id ?></td>
+        <td> <?php echo $country->country_name ?></td>
+        <td><?php echo $country->region_id; ?></td>
+        <td><?php echo $country->region_name; ?></td>
+        <td>
+            <a class="btn btn-primary"href="<?php echo $this->url('countries',array(
+                                        'action' => 'edit',
+                                        'id' => $country->country_id,
+                )) ?>"> Editar </a>
+            
+            <a class="btn btn-danger" href="<?php echo $this->url('countries',array(
+                                        'action' => 'delete',
+                                        'id' => $country->country_id,
+                )) ?>"> Deletar </a>
+        </td>
+    </tr>
+    
+ <?php endforeach; ?>
+ 
+ </table>
 

@@ -43,7 +43,7 @@ class RegionsController extends AbstractActionController
         if ($request->isPost()){
             
             $del = $request->getPost('del','No');
-            \Zend\Debug\Debug::dump($del);
+        
             
             if($del == 'Yes'){
                 $id = (int) $request->getPost('id');
@@ -62,8 +62,6 @@ class RegionsController extends AbstractActionController
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         
-         
-        
         if(!$id){
             return $this->redirect()->toRoute('Regions',array('action' => 'add'));
         }
@@ -73,9 +71,9 @@ class RegionsController extends AbstractActionController
         } catch (Exception $ex) {
             return $this->redirect()->toRoute('Regions',array('action' => 'index'));
         }
-        
         $form = new RegionsForm();
         $form->bind($region);
+        
         $form->get('submit')->setAttribute('value', 'Editar');
         
         $request = $this->getRequest();

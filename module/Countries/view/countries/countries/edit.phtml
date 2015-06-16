@@ -13,7 +13,7 @@ $form = $this->form;
 $form->prepare();
 
 // Assuming the "contact/process" route exists...
-$form->setAttribute('action', $this->url('countries',array('action' => 'add')));
+$form->setAttribute('action', $this->url('countries',array('action' => 'edit','id' => $this->id)));
 
 // Set the method attribute for the form
 $form->setAttribute('method', 'post');
@@ -26,7 +26,7 @@ echo $this->form()->openTag($form);
 
 ?>
 
-<div class="form-group">
+<div class="hidden">
 <?php
     $name = $form->get('country_id');
     
@@ -58,4 +58,5 @@ echo $this->form()->openTag($form);
 <?php endif; ?>
 <?php echo $this->formElement($form->get('submit')) ?>
 <a class="btn btn-info" href="<?php echo $this->url('countries', array('action'=>'index'));?>">Cancelar</a>
+
 <?php echo $this->form()->closeTag() ?>

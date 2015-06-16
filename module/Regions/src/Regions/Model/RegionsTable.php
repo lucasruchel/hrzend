@@ -15,7 +15,8 @@ class RegionsTable{
     
     public function fetchAll(){
         $select = new Select;
-        $select->from($this->tableGateway->getTable());
+        $select->from($this->tableGateway->getTable())
+                ->order('region_id');
      
         $resultSet = $this->tableGateway->selectWith($select);
         
