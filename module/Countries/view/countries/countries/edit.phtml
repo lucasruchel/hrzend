@@ -1,3 +1,61 @@
-Module: Countries
-Controller: countries
-Action: edit
+<?php
+
+$title = 'Formulário de Cadastro de Paises';
+$this->headTitle($title);
+
+?>
+
+<h1><?php echo $this->escapeHtml($title) ?></h1>
+
+<?php
+// within a view script
+$form = $this->form;
+$form->prepare();
+
+// Assuming the "contact/process" route exists...
+$form->setAttribute('action', $this->url('countries',array('action' => 'add')));
+
+// Set the method attribute for the form
+$form->setAttribute('method', 'post');
+
+// Get the form label plugin
+$formLabel = $this->plugin('formLabel');
+
+// Render the opening tag
+echo $this->form()->openTag($form);
+
+?>
+
+<div class="form-group">
+<?php
+    $name = $form->get('country_id');
+    
+    echo $this->formInput($name);
+    echo $this->formElementErrors($name);
+?>
+</div>
+
+<div class="form-group">
+<?php
+    $regionName = $form->get('country_name');
+
+    echo $this->formInput($regionName);
+    echo $this->formElementErrors($regionName);
+?>
+</div>
+<div class="form-group">
+<?php
+    $regionName = $form->get('region_id');
+
+    echo $this->formElement($regionName);
+    echo $this->formElementErrors($regionName);
+?>
+</div>
+<?php if(!empty($this->error)): ?>
+<div class="alert alert-danger">
+    <?php echo $this->error; ?>
+</div>
+<?php endif; ?>
+<?php echo $this->formElement($form->get('submit')) ?>
+<a class="btn btn-info" href="<?php echo $this->url('countries', array('action'=>'index'));?>">Cancelar</a>
+<?php echo $this->form()->closeTag() ?>
