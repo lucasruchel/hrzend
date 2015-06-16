@@ -1,1 +1,7 @@
 Action "index", controller "Employees", module "Employees".
+
+<?php
+
+foreach ($this->employees as $employee){
+    \Zend\Debug\Debug::dump($employee);
+}

@@ -1,0 +1,26 @@
+ <?php
+ // module/Album/view/album/album/delete.phtml:
+
+ $title = 'Deletar Região '.$this->region->region_id;
+ $this->headTitle($title);
+ 
+
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+ <p>
+     você realmente deseja excluir a região <?php echo $this->region->region_name; ?>
+ </p>
+ <?php
+ $url = $this->url('Regions', array(
+     'action' => 'delete',
+     'id'     => $this->region->region_id,
+ ));
+ ?>
+ <form action="<?php echo $url; ?>" method="post">
+ <div>
+     <input type="hidden" name="id" value="<?php echo (int) $this->region->region_id; ?>" />
+     <input type="submit" name="del" value="Yes" />
+     <input type="submit" name="del" value="No" />
+ </div>
+ </form>

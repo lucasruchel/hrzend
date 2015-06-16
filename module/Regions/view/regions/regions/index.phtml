@@ -1,8 +1,39 @@
-Action "index", controller "Regions", module "Regions".
-
 <?php
-echo Zend\Debug\Debug::dump($regions);
+    $title = 'Regiões';
+    $this->headTitle($title);
+?>
 
-foreach ($regions as $region){
-    echo Zend\Debug\Debug::dump($region);
-}
+<h1><?php echo $this->escapeHtml($title) ?></h1>
+
+<div class="label">
+     <a class="btn btn-primary" href="<?php echo $this->url('Regions', array('action'=>'add'));?>">Add new album</a>
+</div>
+
+<hr>
+<table class="table table-responsive">
+    <tr>
+        <th> ID </th>
+        <th> Nome </th>
+        <th> &nbsp;</th>
+    </tr>
+    
+<?php foreach ($this->regions as $region):?>
+    <tr>
+        <td><?php echo $region->region_id; ?></td>
+        <td><?php echo $region->region_name; ?></td>
+        <td>
+            <a class="btn btn-primary"href="<?php echo $this->url('Regions',array(
+                                        'action' => 'edit',
+                                        'id' => $region->region_id,
+                )) ?>"> Editar </a>
+            
+            <a class="btn btn-danger" href="<?php echo $this->url('Regions',array(
+                                        'action' => 'delete',
+                                        'id' => $region->region_id,
+                )) ?>"> Deletar </a>
+        </td>
+    </tr>
+    
+ <?php endforeach; ?>
+ 
+ </table>

@@ -26,7 +26,7 @@ class Module
             ),
         );
     }
-    public function getServiceConfig()
+        public function getServiceConfig()
      {
          return array(
              'factories' => array(
@@ -48,5 +48,5 @@ class Module
             ),
         );
     }
-    
+
 }
