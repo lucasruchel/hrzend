@@ -3,6 +3,7 @@
 namespace Countries\Controller;
 
 use Countries\Form\CountriesForm;
+use Countries\Model\Countries;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;

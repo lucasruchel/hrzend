@@ -1,8 +1,52 @@
-Action "index", controller "Locations", module "Locations".
-
 <?php
+    $title = 'Endereços';
+    $this->headTitle($title);
+?>
 
+<h1><?php echo $this->escapeHtml($title) ?></h1>
 
-foreach ($locations as $location){
-    echo \Zend\Debug\Debug::dump($location);
-}
+<div class="label">
+     <a class="btn btn-primary" href="<?php echo $this->url('Locations', array('action'=>'add'));?>">Adicionar Novo Endereço</a>
+</div>
+
+<hr>
+<table class="table table-responsive">
+    <tr>
+        <th> ID </th>
+        <th> Endereço da rua </th>
+        <th> Cidade </th>
+        <th> Código Postal </th>
+        <th> Estado/Privincia</th>
+        <th> Nome do País</th>
+        
+        <th> &nbsp;</th>
+    </tr>
+    
+<?php foreach ($this->locations as $location):?>
+    <tr>
+        <td><?php echo $location->location_id; ?></td>
+        <td><?php echo $location->street_address; ?></td>
+        <td><?php echo $location->city; ?></td>
+        <td><?php echo $location->postal_code; ?></td>
+        <td><?php echo $location->state_province; ?></td>
+        
+        
+        <td><?php echo $location->country_name; ?></td>
+        
+        
+        <td>
+            <a class="btn btn-primary"href="<?php echo $this->url('Locations',array(
+                                        'action' => 'edit',
+                                        'id' => $location->location_id,
+                )) ?>"> Editar </a>
+            
+            <a class="btn btn-danger" href="<?php echo $this->url('Locations',array(
+                                        'action' => 'delete',
+                                        'id' => $location->location_id,
+                )) ?>"> Deletar </a>
+        </td>
+    </tr>
+    
+ <?php endforeach; ?>
+ 
+ </table>

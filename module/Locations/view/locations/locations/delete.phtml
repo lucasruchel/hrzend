@@ -1,7 +1,6 @@
  <?php
  
-
- $title = 'Deletar País '.$this->country->country_id;
+ $title = 'Deletar Endereço '.$this->location->location_id;
  $this->headTitle($title);
  
 
@@ -9,14 +8,14 @@
  <h1><?php echo $this->escapeHtml($title); ?></h1>
  <div class="panel">
      <p class="panel-title">
-        você realmente deseja excluir a região <?php echo $this->country->country_name; ?>
+        você realmente deseja excluir o endereço <?php echo $this->location->street_address; ?>
      </p>
  </div>
  
  <?php
- $url = $this->url('countries', array(
+ $url = $this->url('Locations', array(
      'action' => 'delete',
-     'id'     => $this->country->country_id,
+     'id'     => (int) $this->location->location_id,
      
  ));
 
@@ -24,7 +23,7 @@
  <form action="<?php echo $url; ?>" method="post">
  <div
      <div class="form-group hidden">
-         <input type="hidden" name="id" value="<?php echo $this->country->country_id; ?>" />
+         <input type="hidden" name="id" value="<?php echo (int) $this->location->location_id; ?>" />
      </div>
         
      <div class="form-group">
