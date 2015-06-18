@@ -1,7 +1,63 @@
-Action "index", controller "Employees", module "Employees".
 
-<?php
+ <?php
+ 
+ $title = 'Funcionários';
+ $this->headTitle($title);
+?>
+       
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel">
+            <h1 class="panel-heading"><?php echo $this->escapeHtml($title); ?></h1>               
+                <strong>
+                            <a class="btn btn-primary" href="<?php echo $this->url('employees', array('action'=>'add'));?>"> <?php echo 'Adicionar' ?></a>
+                </strong>
+        </div>
+    </div>
+</div>
+ <table class="table">
+     <tr>
+         <th> ID </th>
+         <th>Nome</th>
+         <th>Email</th>
+         <th>Emprego</th>
+         <th>Telefone</th>
+         <th>Gerente</th>
+         <th>Salario</th>
+         <th>Comissão</th>
+         <th>Departamento</th>
+         <th>Contratação</th>
+         <td>&nbsp;</td>
+     </tr>
+         <?php foreach ($employees as $employee) : ?>
+                            
+            <tr>
 
-foreach ($this->employees as $employee){
-    \Zend\Debug\Debug::dump($employee);
-}
+               <td><?php echo $this->escapeHtml($employee->employee_id);?></td> 
+               <td><?php echo $this->escapeHtml($employee->first_name." ".$employee->last_name);?></td> 
+               <td><?php echo $this->escapeHtml($employee->email);?></td>
+               <td><?php echo $this->escapeHtml($employee->job_title);?></td>
+               <td><?php echo $this->escapeHtml($employee->phone_number);?></td>
+               <td><?php echo $this->escapeHtml($employee->manager);?></td>
+               <td><?php echo $this->escapeHtml($employee->salary);?></td>
+               <td><?php echo $this->escapeHtml($employee->commission_pct);?></td>
+               <td><?php echo $this->escapeHtml($employee->department_name);?></td>
+               <td><?php echo $this->escapeHtml($employee->hire_date);?></td>
+               <td>
+                   <a class="btn btn-primary" href="<?php echo $this->url('employees',
+                       array('action'=>'edit','id' => $employee->employee_id));?>"> <?php echo $this->translate('Editar');?> </a>
+                       
+                   <a  class="btn btn-danger" href="<?php echo $this->url('employees',
+                       array('action'=>'delete', 'id' => $employee->employee_id));?>"> <?php echo $this->translate('Deletar');?> </a>
+               </td>
+
+           </tr>
+                                                                            
+        <?php endforeach; ?>
+                                       
+ </table> 
+ 
+ 
+ 
+ 
+ 

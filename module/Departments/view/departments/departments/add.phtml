@@ -1,0 +1,51 @@
+<?php
+ // module/Departments/view/departments/departments/add.phtml:
+
+ $title = 'Adicionar um novo Departamento';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+ <?php
+ $form->setAttribute('action', $this->url('departments', array('action' => 'add')));
+ $form->prepare();
+?>
+ <div class="form">
+  
+<?php echo $this->form()->openTag($form); ?>
+<div class="form-group">
+<?php
+    $name = $form->get('department_id');
+    echo $this->formInput($name);
+    echo $this->formElementErrors($name);
+?>
+ </div>
+<div class="form-group">
+<?php
+    $name = $form->get('department_name');
+    echo $this->formLabel($name);
+    echo $this->formInput($name);
+    echo $this->formElementErrors($name);
+?>
+ </div>     
+<div class="form-group">
+<?php
+    $name = $form->get('manager_id');
+    echo $this->formLabel($name);
+    echo $this->formElement($name);
+    echo $this->formElementErrors($name);
+?>
+ </div>
+<div class="form-group">
+<?php
+    $name = $form->get('location_id');
+    echo $this->formLabel($name);
+    echo $this->formElement($name);
+    echo $this->formElementErrors($name);
+?>
+ </div> 
+<?php echo $this->formSubmit($form->get('submit')); ?>
+     
+<a  class="btn btn-info" href="<?php echo $this->url('departments',array('action'=>'index'));?>"> Cancelar </a>  
+     
+ <?php echo $this->form()->closeTag(); ?>
+ </div>

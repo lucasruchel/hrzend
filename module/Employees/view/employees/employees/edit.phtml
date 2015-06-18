@@ -1,0 +1,125 @@
+<?php
+ // module/Employees/view/employees/employees/edit.phtml:
+
+ $title = 'Edit employees';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+ <?php
+ $form = $this->form;
+ $form->setAttribute('action', $this->url(
+     'employees',
+     array(
+         'action' => 'edit',
+         'id'     => $this->employee_id,
+     )
+ ));
+ $form->prepare();
+?>
+ <div class="form">
+    <?php
+        echo $this->form()->openTag($form);
+    ?>
+<div class="form-group">     
+<?php
+    $name = $form->get('employee_id');
+    
+    
+    echo $this->formInput($name);
+    echo $this->formElementErrors($name);
+?>
+</div>
+ <div class="form-group">     
+<?php
+    $name = $form->get('first_name');
+    
+    echo $this->formLabel($name);
+    echo $this->formInput($name);
+    echo $this->formElementErrors($name);
+?>
+</div>
+ <div class="form-group">     
+<?php
+    $name = $form->get('last_name');
+    
+    echo $this->formLabel($name);
+    echo $this->formInput($name);
+    echo $this->formElementErrors($name);
+?>
+</div>
+ <div class="form-group">     
+<?php
+    $name = $form->get('email');
+    
+    echo $this->formLabel($name);
+    echo $this->formInput($name);
+    echo $this->formElementErrors($name);
+?>
+</div>
+     
+<div class="form-group">     
+<?php
+    $name = $form->get('phone_number');
+    
+    echo $this->formLabel($name);
+    echo $this->formInput($name);
+    echo $this->formElementErrors($name);
+?>
+</div>
+     
+<div class="form-group">     
+<?php
+    $name = $form->get('job_id');
+    
+    echo $this->formLabel($name);
+    echo $this->formElement($name);
+    echo $this->formElementErrors($name);
+?>
+</div>
+     
+<div class="form-group">     
+<?php
+    $name = $form->get('salary');
+    
+    echo $this->formLabel($name);
+    echo $this->formInput($name);
+    echo $this->formElementErrors($name);
+?>
+</div>
+     
+<div class="form-group">     
+<?php
+    $name = $form->get('commission_pct');
+    
+    echo $this->formLabel($name);
+    echo $this->formInput($name);
+    echo $this->formElementErrors($name);
+?>
+</div>
+     
+<div class="form-group">     
+<?php
+    $name = $form->get('manager_id');
+    
+    echo $this->formLabel($name);
+    echo $this->formElement($name);
+    echo $this->formElementErrors($name);
+?>
+</div>
+ <div class="form-group">     
+<?php
+    $name = $form->get('department_id');
+    
+    echo $this->formLabel($name);
+    echo $this->formElement($name);
+    echo $this->formElementErrors($name);
+?>
+</div>
+ 
+
+ <?php echo $this->formElement($form->get('submit')) ?>
+ <a class="btn btn-info" href="<?php echo $this->url('employees', array('action'=>'index'));?>">Cancelar</a>
+</div>     
+<?php
+ echo $this->form()->closeTag();

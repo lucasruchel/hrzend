@@ -1,1 +1,48 @@
-Action "index", controller "Departments", module "Departments".
+
+<?php
+ // module/Departments/view/departments/departments/index.phtml:
+ $title = 'Departamentos';
+ $this->headTitle($title);
+?>
+       
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel">
+            <h1 class="panel-heading"><?php echo $this->escapeHtml($title); ?></h1>     
+            <div >
+                    <a class="btn btn-primary" href="<?php echo $this->url('departments', array('action'=>'add'));?>"> <?php echo $this->translate('Adicionar') ?></a>
+            </div>
+
+        </div>
+    </div>
+</div>
+    
+ <table class="table">
+     <tr>
+         <th> ID </th>
+         <th>Cargo</th>
+         <th>ID do Endereço</th>
+         <th>Gerente</th>
+         <td>&nbsp;</td>
+     </tr>
+         <?php foreach ($departments as $department) :?>
+                            
+            <tr>
+
+               <td><?php echo $this->escapeHtml($department->department_id);?></td> 
+               <td><?php echo $this->escapeHtml($department->department_name);?></td> 
+               <td><?php echo $this->escapeHtml($department->location_id);?></td> 
+               <td><?php echo $this->escapeHtml($department->first_name)." ".$this->escapeHtml($department->last_name);?></td> 
+               <td>
+                   <a class="btn btn-primary" href="<?php echo $this->url('departments',
+                       array('action'=>'edit', 'id' => $department->department_id ));?>"> <?php echo $this->translate('Editar');?> </a>
+
+                   <a  class="btn btn-danger" href="<?php echo $this->url('departments',
+                       array('action'=>'delete','id' => $department->department_id));?>"> <?php echo $this->translate('Deletar');?> </a>
+               </td>
+
+           </tr>
+                                                                            
+        <?php endforeach; ?>
+                                       
+ </table>  

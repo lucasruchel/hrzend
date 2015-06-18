@@ -1,0 +1,39 @@
+<?php
+ // module/Album/view/album/album/delete.phtml:
+
+ $title = 'Delete employees';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+ <p>Are you sure that you want to delete
+     '<?php echo $this->escapeHtml($employees->employee_id); ?>' 
+ </p>
+ <?php
+ $url = $this->url('employees', array(
+     'action' => 'delete',
+     'id'     => $this->id,
+ ));
+ ?>
+ <form action="<?php echo $url; ?>" method="post">
+    <div class="form-group hidden">
+        <input type="hidden" name="id" value="<?php echo (int) $this->employees->employee_id; ?>" />
+     </div>
+        
+     <div class="form-group">
+         <input class="form-control btn btn-danger" type="submit" name="del" value="Yes" /> 
+     </div>
+     <div class="form-group">
+         <input class="form-control btn btn-primary"type="submit" name="del" value="No" />
+     </div>
+ </form>
+ 
+
+
+
+
+
+
+
+
+

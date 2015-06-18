@@ -15,7 +15,7 @@ return array(
                      'route'    => '/countries[/:action][/:id]',
                      'constraints' => array(
                          'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                         'id'     => '[a-zA-Z0-9]{2}',
+                         'id'     => '[a-zA-Z0-9]{1,2}',
                      ),
                      'defaults' => array(
                          'controller' => 'Countries\Controller\Countries',

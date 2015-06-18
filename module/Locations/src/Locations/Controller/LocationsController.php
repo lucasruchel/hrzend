@@ -2,6 +2,7 @@
 
 namespace Locations\Controller;
 
+use Locations\Model\Locations;
 
 use Locations\Form\LocationsForm;
 

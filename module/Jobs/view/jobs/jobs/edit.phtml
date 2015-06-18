@@ -1,0 +1,56 @@
+ <?php
+$title = 'Edição de Cargo';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+ <?php
+ $form = $this->form;
+ $form->setAttribute('action', $this->url(
+     'jobs',
+     array(
+         'action' => 'edit',
+         'id'     => $this->id,
+     )
+ ));
+ $form->prepare();
+
+ echo $this->form()->openTag($form);?>
+ <div class="form-group hidden">
+<?php
+    $name = $form->get('job_id');
+    echo $this->formLabel($name);
+    echo $this->formInput($name);
+    echo $this->formElementErrors($name);
+?>
+ </div>
+<div class="form-group">
+<?php
+    $name = $form->get('job_title');
+    echo $this->formLabel($name);
+    echo $this->formInput($name);
+    echo $this->formElementErrors($name);
+?>
+ </div>
+<div class="form-group">
+<?php
+    $name = $form->get('min_salary');
+    echo $this->formLabel($name);
+    echo $this->formInput($name);
+    echo $this->formElementErrors($name);
+?>
+ </div>
+ <div class="form-group">
+<?php
+    $name = $form->get('max_salary');
+    echo $this->formLabel($name);
+    echo $this->formInput($name);
+    echo $this->formElementErrors($name);
+?>
+ </div>
+ 
+ <?php
+ echo $this->formSubmit($form->get('submit'));
+ ?>
+ <a class="btn btn-primary" href="<?php echo $this->url('jobs', array('action'=>'index'));?>">Cancelar</a><?php
+ echo $this->form()->closeTag();

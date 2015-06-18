@@ -9,13 +9,13 @@ return array(
      // The following section is new and should be added to your file
      'router' => array(
          'routes' => array(
-             'Jobs' => array(
+             'jobs' => array(
                  'type'    => 'segment',
                  'options' => array(
                      'route'    => '/jobs[/:action][/:id]',
                      'constraints' => array(
                          'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                         'id'     => '[0-9]+',
+                         'id'     => '[a-zA-Z0-9-_]*',
                      ),
                      'defaults' => array(
                          'controller' => 'Jobs\Controller\Jobs',
@@ -28,7 +28,7 @@ return array(
 
      'view_manager' => array(
          'template_path_stack' => array(
-             'Jobs' => __DIR__ . '/../view',
+             'jobs' => __DIR__ . '/../view',
          ),
      ),
  );

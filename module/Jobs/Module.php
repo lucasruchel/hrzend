@@ -1,5 +1,13 @@
 <?php
 namespace Jobs;
+ use Jobs\Model\Jobs;
+ 
+ use Jobs\Model\JobsTable;
+
+ use Zend\Db\TableGateway\TableGateway;
+
+use Zend\Stdlib\Hydrator\ObjectProperty;
+use Zend\Db\ResultSet\HydratingResultSet;
 
 class Module
 {
@@ -18,4 +26,29 @@ class Module
             ),
         );
     }
+    
+     public function getServiceConfig()
+     {
+         return array(
+             'factories' => array(
+                 'Jobs\Model\JobsTable' =>  function($sm) {
+                     $tableGateway = $sm->get('JobsTableGateway');
+                     $table = new JobsTable($tableGateway);
+                     return $table;
+                 },
+                 'JobsTableGateway' => function ($sm) {
+                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                     
+                     
+                     $resultSetPrototype = new HydratingResultSet();
+                     $resultSetPrototype->setHydrator(new ObjectProperty());
+                     $resultSetPrototype->setObjectPrototype(new Jobs());
+                     
+                     return new TableGateway('jobs', $dbAdapter, null, $resultSetPrototype);
+                },
+            ),
+        );
+    }
+
+
 }
