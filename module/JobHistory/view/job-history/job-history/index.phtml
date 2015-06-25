@@ -1,0 +1,110 @@
+<?php
+    $title = 'Historico de Trabalho';
+    $this->headTitle($title);
+?>
+<div class="panel">
+    <div class="">
+        <div class="panel-heading">
+            <h1><?php echo $this->escapeHtml($title); ?></h1>               
+            
+                
+        </div>
+    </div>
+</div>
+<table class="table table-responsive">
+    <tr>
+        <th> ID Empregado </th>
+        <th> Empregado </th>
+        <th> Cargo </th>
+        <th> Data Inicio </th>
+        <th> Data Final </th>
+        <th> Departamento</th>
+        
+    </tr>
+    <tr>
+        
+        <?php
+        
+        
+            $form->setAttribute('action', $this->url('jobshistory', array('action' => 'index')));
+            $form->setAttribute('method','get');
+            $form->prepare();
+            
+            echo $this->form()->openTag($form);
+        ?>
+        
+        <th>
+            <?php 
+                $name = $form->get('employee_id');
+                echo $this->formInput($name);
+                echo $this->formElementErrors($name); 
+            ?>
+        </th>
+        <th> 
+            <?php 
+                $name = $form->get('employee_name');
+                echo $this->formInput($name);
+                echo $this->formElementErrors($name); 
+            ?>
+        </th>
+        <th> 
+            <?php 
+                $name = $form->get('job_name');
+                echo $this->formInput($name);
+                echo $this->formElementErrors($name); 
+            ?>
+        </th>
+        <th>
+            <?php 
+                $name = $form->get('begin_date');
+                echo $this->formInput($name);
+                echo $this->formElementErrors($name); 
+            ?>
+        </th>
+        <th>
+            <?php 
+                $name = $form->get('end_date');
+                echo $this->formInput($name);
+                echo $this->formElementErrors($name); 
+            ?>
+        </th>
+        <th> 
+            <?php 
+                $name = $form->get('department_name');
+                echo $this->formInput($name);
+                echo $this->formElementErrors($name); 
+            ?>
+        </th>
+        
+        <?php echo $this->form()->closeTag() ?>
+        
+    </tr>
+<?php foreach ($jobHistory as $jobhistor) : ?>
+     <tr>
+        <td><?php echo $jobhistor->employee_id; ?></td>
+        <td><?php echo $jobhistor->first_name.' '.$jobhistor->last_name; ?></td>
+        <td><?php echo $jobhistor->job_title; ?></td>
+        <td><?php echo $jobhistor->start_date; ?></td>
+        <td><?php echo $jobhistor->end_date; ?></td>
+        <td><?php echo $jobhistor->department_name; ?></td>
+                    
+    </tr>    
+               
+   <?php endforeach; ?>
+</table>
+
+<?php
+            
+
+        // add at the end of the file after the table
+        echo $this->paginationControl(
+            // the paginator object
+            $this->jobHistory,
+            // the scrolling style
+            'sliding',
+            // the partial to use to render the control
+            'partial/paginator.phtml',
+            // the route to link to when a user clicks a control link
+            array('route' => 'jobshistory','parametros' => $this->params)
+        );
+    ?>

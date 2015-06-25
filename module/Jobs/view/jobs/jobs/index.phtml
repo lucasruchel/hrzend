@@ -20,6 +20,8 @@
      <tr>
          <th> ID </th>
          <th>Titulo do Emprego</th>
+         <th>Salário Minimo</th>
+         <th>Salário Maximo</th>
          <td>&nbsp;</td>
      </tr>
          <?php foreach ($jobs as $job) : ?>
@@ -28,6 +30,8 @@
 
                 <td><?php echo $this->escapeHtml(preg_replace('/\s+/', '',$job->job_id));?></td> 
                <td><?php echo $this->escapeHtml($job->job_title);?></td> 
+               <td><?php echo $this->escapeHtml($job->min_salary);?></td> 
+               <td><?php echo $this->escapeHtml($job->max_salary);?></td> 
                <td>
                    <a class="btn btn-primary" href="<?php echo $this->url('jobs',
                        array('action'=>'edit', 'id' => preg_replace('/\s+/', '',$job->job_id) ));?>"> <?php echo $this->translate('Editar');?> </a>
@@ -41,3 +45,16 @@
         <?php endforeach; ?>
                                        
  </table>  
+<?php
+        // add at the end of the file after the table
+        echo $this->paginationControl(
+            // the paginator object
+            $this->jobs,
+            // the scrolling style
+            'sliding',
+            // the partial to use to render the control
+            'partial/paginator.phtml',
+            // the route to link to when a user clicks a control link
+            $this->route
+        );
+    ?>

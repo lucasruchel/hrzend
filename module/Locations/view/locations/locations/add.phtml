@@ -20,11 +20,13 @@ $form->setAttribute('method', 'post');
 
 // Get the form label plugin
 $formLabel = $this->plugin('formLabel');
-
-// Render the opening tag
-echo $this->form()->openTag($form);
-
 ?>
+
+<div class="form">
+
+<?php echo $this->form()->openTag($form); ?>
+
+
 
 <div class="form-group">
 <?php
@@ -75,12 +77,22 @@ echo $this->form()->openTag($form);
     echo $this->formElement($countryId);
     echo $this->formElementErrors($countryId);
 ?>
+
 </div>
+
 <?php if(!empty($this->error)): ?>
-<div class="alert alert-danger">
-    <?php echo $this->error; ?>
+<div class="form-group">
+
+    <div class="alert alert-danger">
+        <?php echo $this->error; ?>
+    </div>
 </div>
 <?php endif; ?>
+
+
 <?php echo $this->formElement($form->get('submit')) ?>
+    
 <a class="btn btn-info" href="<?php echo $this->url('Locations', array('action'=>'index'));?>">Cancelar</a>
-<?php echo $this->form()->closeTag() ?>
+
+</div>
+ <?php echo $this->form()->closeTag() ?>

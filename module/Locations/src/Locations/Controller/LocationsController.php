@@ -38,9 +38,15 @@ class LocationsController extends AbstractActionController
 
     public function indexAction()
     {
+        $paginator = $this->getLocationsTable()->fetchAll(true);
+     
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+     
+        $paginator->setItemCountPerPage(10);
+        
         return new ViewModel(
                 array(
-                    'locations' => $this->getLocationsTable()->fetchAll(),
+                    'locations' => $paginator,
                 )
             );
     }
@@ -123,8 +129,6 @@ class LocationsController extends AbstractActionController
                 $this->getLocationsTable()->saveLocation($location);
                 
                 return $this->redirect()->toRoute('Locations');
-            }else{
-                $error = 'Erro ao salvar no banco, tente alterar o ID';
             }
         }
         return array(

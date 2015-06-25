@@ -74,38 +74,19 @@ class Jobs{
                  'name'     => 'min_salary',
                  'required' => true,
                  'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
+                     array('name' => 'Int'),
+                     
                  ),
-                 'validators' => array(
-                     array(
-                         'name'    => 'StringLength',
-                         'options' => array(
-                             'encoding' => 'UTF-8',
-                             'min'      => 1,
-                             'max'      => 100,
-                         ),
-                     ),
-                 ),
+                 
              ));
              
               $inputFilter->add(array(
                  'name'     => 'max_salary',
                  'required' => true,
                  'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
+                     array('name' => 'Int'),
                  ),
-                 'validators' => array(
-                     array(
-                         'name'    => 'StringLength',
-                         'options' => array(
-                             'encoding' => 'UTF-8',
-                             'min'      => 1,
-                             'max'      => 100,
-                         ),
-                     ),
-                 ),
+                 
              ));
 
              $this->inputFilter = $inputFilter;

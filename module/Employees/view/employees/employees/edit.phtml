@@ -116,10 +116,17 @@
     echo $this->formElementErrors($name);
 ?>
 </div>
+ <?php if (!empty($this->error)): ?>
+     <div class="form-group alert-danger form-control">
+         <?php echo $this->error ?>
+     </div>
+<?php endif; ?>
  
-
- <?php echo $this->formElement($form->get('submit')) ?>
- <a class="btn btn-info" href="<?php echo $this->url('employees', array('action'=>'index'));?>">Cancelar</a>
+     <div class="form-group">
+            <?php echo $this->formElement($form->get('submit')) ?>
+            <a class="btn btn-info" href="<?php echo $this->url('employees', array('action'=>'index'));?>">Cancelar</a>
+     </div>
+ 
 </div>     
 <?php
  echo $this->form()->closeTag();

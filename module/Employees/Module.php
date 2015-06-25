@@ -50,36 +50,6 @@ class Module
                      return new TableGateway('employees', $dbAdapter, null, $resultSetPrototype);
                 },
             ),
-                'Jobs\Model\JobsTable' =>  function($sm) {
-                         $tableGateway = $sm->get('JobsTableGateway');
-                         $table = new JobsTable($tableGateway);
-                         return $table;
-                     },
-                     'JobsTableGateway' => function ($sm) {
-                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-
-
-                         $resultSetPrototype = new HydratingResultSet();
-                         $resultSetPrototype->setHydrator(new ObjectProperty());
-                         $resultSetPrototype->setObjectPrototype(new Jobs());
-
-                         return new TableGateway('jobs', $dbAdapter, null, $resultSetPrototype);
-                    },
-                'Departments\Model\DepartmentsTable' =>  function($sm) {
-                     $tableGateway = $sm->get('DepartmentsTableGateway');
-                     $table = new DepartmentsTable($tableGateway);
-                     return $table;
-                 },
-                 'DepartmentsTableGateway' => function ($sm) {
-                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                     
-                     
-                     $resultSetPrototype = new HydratingResultSet();
-                     $resultSetPrototype->setHydrator(new ObjectProperty());
-                     $resultSetPrototype->setObjectPrototype(new Departments());
-                     
-                     return new TableGateway('departments', $dbAdapter, null, $resultSetPrototype);
-                },            
         );
                 
     }

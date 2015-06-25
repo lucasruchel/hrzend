@@ -20,9 +20,10 @@
  <table class="table">
      <tr>
          <th> ID </th>
-         <th>Cargo</th>
+         <th>Nome</th>
          <th>ID do Endereço</th>
          <th>Gerente</th>
+         <th>Departamento Chefe</th>
          <td>&nbsp;</td>
      </tr>
          <?php foreach ($departments as $department) :?>
@@ -33,6 +34,7 @@
                <td><?php echo $this->escapeHtml($department->department_name);?></td> 
                <td><?php echo $this->escapeHtml($department->location_id);?></td> 
                <td><?php echo $this->escapeHtml($department->first_name)." ".$this->escapeHtml($department->last_name);?></td> 
+               <td><?php echo $this->escapeHtml($department->sub_department_name);?></td>    
                <td>
                    <a class="btn btn-primary" href="<?php echo $this->url('departments',
                        array('action'=>'edit', 'id' => $department->department_id ));?>"> <?php echo $this->translate('Editar');?> </a>
@@ -46,3 +48,16 @@
         <?php endforeach; ?>
                                        
  </table>  
+<?php
+        // add at the end of the file after the table
+        echo $this->paginationControl(
+            // the paginator object
+            $this->departments,
+            // the scrolling style
+            'sliding',
+            // the partial to use to render the control
+            'partial/paginator.phtml',
+            // the route to link to when a user clicks a control link
+            $this->route
+        );
+    ?>

@@ -35,3 +35,12 @@ div.container a.brand {
     margin-left: 0;
     padding: 8px 20px 12px 40px;
 }
+.img {
+    margin: 20px 10px 5px 10px;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+}
+.navbar{
+    background-color: #03A9F4 !important;
+}

@@ -41,9 +41,14 @@ class DepartmentsController extends AbstractActionController
 
         public function indexAction()
         {
+        $paginator = $this->getDepartmentsTable()->fetchAll(true);
+     
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+     
+        $paginator->setItemCountPerPage(10);
         return new ViewModel(
                 array(
-                    'departments' => $this->getDepartmentsTable()->fetchAll(),            
+                    'departments' => $paginator,            
                 )
             );
         }
@@ -82,9 +87,10 @@ class DepartmentsController extends AbstractActionController
      {
         $employees =$this->getEmployeesTable()->fetchAll();
         $locations =$this->getLocationsTable()->fetchAll();
-        
-        
-         $form = new DepartmentsForm($employees,$locations);//,$locations);
+        $subDepartments =$this->getDepartmentsTable()->fetchAll();
+       
+         $form = new DepartmentsForm($employees,$locations,$subDepartments);//,$locations);
+         
          $form->get('submit')->setValue('Add');
 
          $request = $this->getRequest();
@@ -125,9 +131,9 @@ class DepartmentsController extends AbstractActionController
         
         $employees = $this->getEmployeesTable()->fetchAll();
         $locations = $this->getLocationsTable()->fetchAll();
-                
+        $subDepartments =$this->getDepartmentsTable()->fetchAll();      
         
-         $form = new DepartmentsForm($employees,$locations);  
+         $form = new DepartmentsForm($employees,$locations,$subDepartments);  
          $form->bind($departments);
          $form->get('submit')->setAttribute('value', 'Editar');
 

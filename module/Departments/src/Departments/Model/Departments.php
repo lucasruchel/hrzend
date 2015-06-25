@@ -11,6 +11,7 @@ class Departments{
     public $department_name;
     public $manager_id;
     public $location_id;
+    public $sub_department;
     public $inputFilter;
     
     public function exchangeArray($data){
@@ -18,6 +19,7 @@ class Departments{
         $this->department_name = (!empty($data['department_name'])) ? $data['department_name'] : null;
         $this->manager_id = (!empty($data['manager_id'])) ? $data['manager_id'] : null;
         $this->location_id = (!empty($data['location_id'])) ? $data['location_id'] : null;
+        $this->sub_department = (!empty($data['sub_department'])) ? $data['sub_department'] : null; 
     }
     public function setInputFilter(InputFilterInterface $inputFilter)
      {

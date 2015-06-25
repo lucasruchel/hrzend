@@ -2,10 +2,14 @@
 
 namespace Locations\Model;
 
-use Zend\Db\TableGateway\TableGateway;
-use Zend\Db\Sql\Select;
-use Zend\Db\ResultSet\ResultSet;
+use Exception;
+use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\Sql\Expression;
+use Zend\Db\Sql\Select;
+use Zend\Db\TableGateway\TableGateway;
+use Zend\Paginator\Adapter\DbSelect;
+use Zend\Paginator\Paginator;
+use Zend\Stdlib\Hydrator\ObjectProperty;
 
 class LocationsTable{
 
@@ -17,11 +21,30 @@ class LocationsTable{
         $this->tableGateway = $tableGateway;
     }
     
-    public function fetchAll(){
+    public function fetchAll($paginated=false){
         $select = new Select;
         $select->from($this->tableGateway->getTable())
-            ->join('countries', 'locations.country_id = countries.country_id');
-
+            ->join('countries', 'locations.country_id = countries.country_id')
+            ->order('location_id');
+        
+        if($paginated){
+            
+            
+            $resultSetPrototype = new HydratingResultSet();
+            $resultSetPrototype->setHydrator(new ObjectProperty());
+            
+             $paginatorAdapter = new DbSelect(
+                 
+                 $select,
+                 
+                 $this->tableGateway->getAdapter(),
+                 
+                 $resultSetPrototype
+             );
+             
+             $paginator = new Paginator($paginatorAdapter);
+             return $paginator;
+        }
         
         $resultSet = $this->tableGateway->selectWith($select);
         
@@ -50,7 +73,7 @@ class LocationsTable{
             $rowset = $this->tableGateway->selectWith($select);
             $row = $rowset->current();
             if (!$row) {
-                throw new \Exception("Could not retrieve max Location Id");
+                throw new Exception("Could not retrieve max Location Id");
             }
             
             $id = ((int) $row->maxId)+1;
@@ -72,7 +95,7 @@ class LocationsTable{
         $rowset = $this->tableGateway->select(array('location_id' => $id));
         $row = $rowset->current();
         if (!$row) {
-            throw new \Exception("Could not find row $id");
+            throw new Exception("Could not find row $id");
         }
         return $row;
     }

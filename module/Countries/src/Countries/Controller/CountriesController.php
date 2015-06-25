@@ -36,9 +36,15 @@ class CountriesController extends AbstractActionController
 
     public function indexAction()
     {
+        $paginator = $this->getCountriesTable()->fetchAll(true);
+     
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+     
+        $paginator->setItemCountPerPage(10);
+        
         return new ViewModel(
                 array(
-                    'countries' => $this->getCountriesTable()->fetchAll(),
+                    'countries' => $paginator,
                 )
             );
     }

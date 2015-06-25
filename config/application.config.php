@@ -9,7 +9,7 @@ return array(
     'modules' => array(
         'Application',
         'Countries',
-        'Job_history',
+        'JobHistory',
         'Employees',
         'Jobs',
         'Departments',

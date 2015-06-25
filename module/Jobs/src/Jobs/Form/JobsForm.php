@@ -35,22 +35,24 @@ namespace Jobs\Form;
          ));
          $this->add(array(
              'name' => 'min_salary',
-             'type' => 'Text',
+             'type' => 'Number',
              'options' => array(
-                 'label' => 'Sálario Máximo do Cargo',
+                 'label' => 'Sálario Minimo do Cargo',
              ),
              'attributes' => array(
+                 'min' => 1,
                 'class' => 'form-control',
                 'placeholder' => 'Digite o sálario Minino do Cargo',
              ),
          ));
          $this->add(array(
              'name' => 'max_salary',
-             'type' => 'Text',
+             'type' => 'Number',
              'options' => array(
                  'label' => 'Sálario Máximo do Cargo',
              ),
              'attributes' => array(
+                'min' => 1,
                 'class' => 'form-control',
                 'placeholder' => 'Digite o o sálario Maximo do Cargo',
              ),

@@ -1,0 +1,81 @@
+ <?php if ($this->pageCount): ?>
+     <div>
+         <ul class="pagination">
+             <!-- Previous page link -->
+             <?php if (isset($this->previous)): ?>
+                 <li>
+                        <?php if(!empty($this->parametros)): 
+                            $params = $this->parametros;
+                        
+                            $params['page'] = $this->previous;
+                        ?>
+                             <a href="<?php echo $this->url($this->route);?>?<?php echo http_build_query($params)?>">
+                         <?php else: ?>
+                                <a href="<?php echo $this->url($this->route);?>?page=<?php echo $this->previous; ?>">
+                         <?php endif; ?>
+                     
+                         <<
+                     </a>
+                 </li>
+             <?php else: ?>
+                 <li class="disabled">
+                     <a href="#">
+                         <<
+                     </a>
+                 </li>
+             <?php endif; ?>
+
+             <!-- Numbered page links -->
+             <?php foreach ($this->pagesInRange as $page): ?>
+                 <?php if ($page != $this->current): ?>
+                     <li>
+                        <?php if(!empty($this->parametros)):
+                            $params = $this->parametros;
+                            
+                            $params['page'] = $page;
+                            
+                        
+                        ?>
+                                <a href="<?php echo $this->url($this->route);?>?<?php echo http_build_query($params)?>">
+                         <?php else: ?>
+                                <a href="<?php echo $this->url($this->route);?>?page=<?php echo $page; ?>">
+                         <?php endif; ?>
+                                <?php echo $page; ?>
+                         </a>
+                     </li>
+                 <?php else: ?>
+                     <li class="active">
+                         <a href="#"><?php echo $page; ?></a>
+                     </li>
+                 <?php endif; ?>
+             <?php endforeach; ?>
+
+             <!-- Next page link -->
+             <?php if (isset($this->next)): ?>
+                 <li>
+                    <?php if(!empty($this->parametros)): 
+                        $teste = $this->parametros;
+                            
+                        $params['page'] = $this->next;
+                        
+                        
+                     ?>
+                        <a href="<?php echo $this->url($this->route);?>?<?php echo http_build_query($params)?>">
+                    <?php else: ?>
+                        <a href="<?php echo $this->url($this->route);?>?page=<?php echo $this->next; ?>">
+                    <?php endif; ?>
+                         >>
+                     </a>
+                 </li>
+             <?php else: ?>
+                 <li class="disabled">
+                     <a href="#">
+                         >>
+                     </a>
+                 </li>
+             <?php endif; 
+ 
+             ?>
+         </ul>
+     </div>
+ <?php endif; ?>

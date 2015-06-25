@@ -48,21 +48,7 @@ class Module
                      
                      return new TableGateway('departments', $dbAdapter, null, $resultSetPrototype);
                 },
-                'Locations\Model\LocationsTable' =>  function($sm) {
-                     $tableGateway = $sm->get('LocationsTableGateway');
-                     $table = new LocationsTable($tableGateway);
-                     return $table;
-                 },
-                 'LocationsTableGateway' => function ($sm) {
-                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                     
-                     
-                     $resultSetPrototype = new HydratingResultSet();
-                     $resultSetPrototype->setHydrator(new ObjectProperty());
-                     $resultSetPrototype->setObjectPrototype(new Locations());
-                     
-                     return new TableGateway('locations', $dbAdapter, null, $resultSetPrototype);
-                },
+                
             ),
         );
     }

@@ -39,7 +39,7 @@ class Locations{
              ));
             $inputFilter->add(array(
                  'name'     => 'street_address',
-                 'required' => true,
+                 'required' => false,
                  'filters'  => array(
                      array('name' => 'StripTags'),
                      array('name' => 'StringTrim'),
@@ -57,7 +57,7 @@ class Locations{
              ));
             $inputFilter->add(array(
                  'name'     => 'postal_code',
-                 'required' => true,
+                 'required' => false,
                  'filters'  => array(
                      array('name' => 'StripTags'),
                      array('name' => 'StringTrim'),
@@ -110,24 +110,6 @@ class Locations{
                  ),
              ));
             
-            $inputFilter->add(array(
-                 'name'     => 'state_province',
-                 'required' => true,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                 ),
-                 'validators' => array(
-                     array(
-                         'name'    => 'StringLength',
-                         'options' => array(
-                             'encoding' => 'UTF-8',
-                             'min'      => 3,
-                             'max'      => 25,
-                         ),
-                     ),
-                 ),
-             ));
             $inputFilter->add(array(
                  'name'     => 'country_id',
                  'required' => true,

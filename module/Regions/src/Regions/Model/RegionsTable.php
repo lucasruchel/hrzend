@@ -1,9 +1,14 @@
 <?php
 namespace Regions\Model;
 
-use Zend\Db\TableGateway\TableGateway;
-use Zend\Db\Sql\Select;
+use Exception;
+use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\Sql\Expression;
+use Zend\Db\Sql\Select;
+use Zend\Db\TableGateway\TableGateway;
+use Zend\Paginator\Adapter\DbSelect;
+use Zend\Paginator\Paginator;
+use Zend\Stdlib\Hydrator\ObjectProperty;
 
 
 class RegionsTable{
@@ -13,11 +18,30 @@ class RegionsTable{
         $this->tableGateway = $tableGateway;
     }
     
-    public function fetchAll(){
+    public function fetchAll($paginated=false){
         $select = new Select;
         $select->from($this->tableGateway->getTable())
                 ->order('region_id');
-     
+        
+        if($paginated){
+            
+            
+            $resultSetPrototype = new HydratingResultSet();
+            $resultSetPrototype->setHydrator(new ObjectProperty());
+            
+             $paginatorAdapter = new DbSelect(
+                 
+                 $select,
+                 
+                 $this->tableGateway->getAdapter(),
+                 
+                 $resultSetPrototype
+             );
+             
+             $paginator = new Paginator($paginatorAdapter);
+             return $paginator;
+        }
+        
         $resultSet = $this->tableGateway->selectWith($select);
         
         return $resultSet;
@@ -43,7 +67,7 @@ class RegionsTable{
             $rowset = $this->tableGateway->selectWith($select);
             $row = $rowset->current();
             if (!$row) {
-                throw new \Exception("Could not retrieve max Regions Id");
+                throw new Exception("Could not retrieve max Regions Id");
             }
             
             $id = ((int) $row->maxId)+1;
@@ -60,7 +84,7 @@ class RegionsTable{
         $rowset = $this->tableGateway->select(array('region_id' => $id));
         $row = $rowset->current();
         if (!$row) {
-            throw new \Exception("Could not find row $id");
+            throw new Exception("Could not find row $id");
         }
         return $row;
     }

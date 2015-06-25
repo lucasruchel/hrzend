@@ -25,9 +25,15 @@ class RegionsController extends AbstractActionController
 
     public function indexAction()
     {
+        $paginator = $this->getRegionsTable()->fetchAll(true);
+     
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+     
+        $paginator->setItemCountPerPage(10);
+        
         return new ViewModel(
                 array(
-                    'regions' => $this->getRegionsTable()->fetchAll(),
+                    'regions' => $paginator,
                 )
             );
     }

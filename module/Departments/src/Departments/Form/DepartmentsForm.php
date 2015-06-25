@@ -7,10 +7,13 @@ namespace Departments\Form;
  {
      public $employees;
      public $locations;
-     public function __construct($employees,$locations)
+     public $departments;
+    
+     public function __construct($employees,$locations,$departments)
      {
          $this->employees=$employees;
          $this->locations= $locations;
+         $this->departments= $departments;
          // we want to ignore the name passed
          parent::__construct('departments');
 
@@ -44,14 +47,27 @@ namespace Departments\Form;
                  'class' => 'form-control'
              ),
             
-        ]); 
+        ]);
         $this->add([
             'name' => 'location_id',
             'type' => 'Select',
             'options' =>[
-                'label' => 'Endereço',
-                'empty_option' => 'Selecione um Endereço',
+                'label' => 'Local',
+                'empty_option' => 'Selecione um local',
                 'value_options' => $this->getOptionsLocationsSelect(), 
+            ],
+            'attributes' => array(
+                 'class' => 'form-control'
+             ),
+            
+        ]);
+        $this->add([
+            'name' => 'sub_department',
+            'type' => 'Select',
+            'options' =>[
+                'label' => 'Departamento Chefe',
+                'empty_option' => 'Selecione um Departamento',
+                'value_options' => $this->getOptionsSubDepartmentSelect(), 
             ],
             'attributes' => array(
                  'class' => 'form-control'
@@ -71,9 +87,23 @@ namespace Departments\Form;
      public function getOptionsManagerSelect()
     {
         $selectData = array();       
-        foreach ($this->employees as $employee){
-            $selectData[$employee->employee_id] = $employee->first_name;
+        foreach ($this->employees as $employee){   
+            $selectData[$employee->employee_id] = $employee->full_name;
         }
+        //carrego mais ainda deu um erro
+        //esse erro deve ser pera
+        return $selectData;
+    }
+    public function getOptionsSubDepartmentSelect()
+    {
+        $selectData = array(); 
+       
+        foreach ($this->departments as $department){
+            
+        
+            $selectData[$department->department_id] = $department->department_name;
+        }
+        
         //carrego mais ainda deu um erro
         //esse erro deve ser pera
         return $selectData;

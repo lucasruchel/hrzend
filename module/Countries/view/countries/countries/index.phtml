@@ -28,12 +28,12 @@
         <td>
             <a class="btn btn-primary"href="<?php echo $this->url('countries',array(
                                         'action' => 'edit',
-                                        'id' => $country->country_id,
+                                        'id' =>  preg_replace('/\s+/', '',$country->country_id),
                 )) ?>"> Editar </a>
             
-            <a class="btn btn-danger" href="<?php echo $this->url('countries',array(
+            <a class="btn btn-danger " href="<?php echo $this->url('countries',array(
                                         'action' => 'delete',
-                                        'id' => $country->country_id,
+                                        'id' => preg_replace('/\s+/', '',$country->country_id),
                 )) ?>"> Deletar </a>
         </td>
     </tr>
@@ -42,3 +42,16 @@
  
  </table>
 
+<?php
+        // add at the end of the file after the table
+        echo $this->paginationControl(
+            // the paginator object
+            $this->countries,
+            // the scrolling style
+            'sliding',
+            // the partial to use to render the control
+            'partial/paginator.phtml',
+            // the route to link to when a user clicks a control link
+            $this->route
+        );
+    ?>

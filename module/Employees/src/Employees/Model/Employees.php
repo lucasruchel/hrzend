@@ -107,6 +107,39 @@ class Employees implements InputFilterAwareInterface{
                      ),
                  ),
              ));
+             $inputFilter->add(array(
+                 'name'     => 'salary',
+                 'required' => true,
+                 'validators' => array(
+                     array(
+                         'name'    => 'Float',
+                         'options' => array(
+                             'encoding' => 'UTF-8',
+                             'min'      => 0,
+                         ),
+                     ),
+                 ),
+             ));
+             $inputFilter->add(array(
+                 'name'     => 'commission_pct',
+                 'required' => true,
+                  'filters'  => array(
+                     array('name' => 'Int'),
+                 ),
+                 'validators' => array(
+                     array(
+                         'name'    => 'Between',
+                         'options' => array(
+                             'min'      => 0,
+                             'max'      => 100,
+                         ),
+                     ),
+                 ),
+             ));
+             $inputFilter->add(array(
+                 'name'     => 'manager_id',
+                 'required' => false,
+             ));
 
              $this->inputFilter = $inputFilter;
          }

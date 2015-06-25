@@ -16,6 +16,7 @@ $title = 'Edição de Cargo';
  $form->prepare();
 
  echo $this->form()->openTag($form);?>
+ <div class="form">
  <div class="form-group hidden">
 <?php
     $name = $form->get('job_id');
@@ -48,9 +49,12 @@ $title = 'Edição de Cargo';
     echo $this->formElementErrors($name);
 ?>
  </div>
+     <div class="form-group">
+        <?php echo $this->formSubmit($form->get('submit')); ?>
  
- <?php
- echo $this->formSubmit($form->get('submit'));
- ?>
- <a class="btn btn-primary" href="<?php echo $this->url('jobs', array('action'=>'index'));?>">Cancelar</a><?php
- echo $this->form()->closeTag();
+        <a class="btn btn-primary" href="<?php echo $this->url('jobs', array('action'=>'index'));?>">Cancelar</a>
+
+    </div> 
+ 
+ </div>
+<?php  echo $this->form()->closeTag();

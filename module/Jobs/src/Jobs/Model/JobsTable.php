@@ -2,9 +2,13 @@
 
 namespace Jobs\Model;
 
-use Zend\Db\TableGateway\TableGateway;
+use Exception;
+use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\Sql\Select;
-use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
+use Zend\Paginator\Adapter\DbSelect;
+use Zend\Paginator\Paginator;
+use Zend\Stdlib\Hydrator\ObjectProperty;
 
 class JobsTable{
 
@@ -16,15 +20,32 @@ class JobsTable{
         $this->tableGateway = $tableGateway;
     }
     
-    public function fetchAll(){
+    public function fetchAll($paginated=false){
         $select = new Select;
-        $select->from('jobs');
-            //->join('regions', 'countries.region_id = regions.region_id');
+        $select->from('jobs')
+               ->order('job_id');
 
+         if($paginated){
+            
+            
+            $resultSetPrototype = new HydratingResultSet();
+            $resultSetPrototype->setHydrator(new ObjectProperty());
+            
+             $paginatorAdapter = new DbSelect(
+                 
+                 $select,
+                 
+                 $this->tableGateway->getAdapter(),
+                 
+                 $resultSetPrototype
+             );
+             
+             $paginator = new Paginator($paginatorAdapter);
+             return $paginator;
+        }
+        
         
         $resultSet = $this->tableGateway->selectWith($select);
-        
-
         
         return $resultSet;
     }
@@ -33,7 +54,7 @@ class JobsTable{
          $rowset = $this->tableGateway->select(array('job_id' => $id));
          $row = $rowset->current();
          if (!$row) {
-             throw new \Exception("Could not find row $id");
+             throw new Exception("Could not find row $id");
          }
          return $row;
      }

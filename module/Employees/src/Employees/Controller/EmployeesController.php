@@ -15,47 +15,59 @@ class EmployeesController extends AbstractActionController
     protected $departmentsTable;
     protected $managerTable;
 
-
-    public function getEmployeesTable(){
+    public function getEmployeesTable()
+    {
         if (!$this->employeesTable){
             $sm =  $this->getServiceLocator();
             $this->employeesTable = $sm->get('Employees\Model\EmployeesTable');
         }
-        
+
         return $this->employeesTable;
     }
 
-    public function getJobsTable(){
+    public function getJobsTable()
+    {
         if (!$this->jobsTable){
             $sm =  $this->getServiceLocator();
             $this->jobsTable = $sm->get('Jobs\Model\JobsTable');
         }
-        
+
         return $this->jobsTable;
     }
 
-    public function getDepartmentsTable(){
+    public function getDepartmentsTable()
+    {
         if (!$this->departmentsTable){
             $sm =  $this->getServiceLocator();
             $this->departmentsTable = $sm->get('Departments\Model\DepartmentsTable');
         }
-        
+
         return $this->departmentsTable;
     }
 
     public function indexAction()
     {
+        $teste = $this->getRequest()->getPost('fName');
+     
+        
+        
+        $paginator = $this->getEmployeesTable()->fetchAll(true,$teste);
+     
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+     
+        $paginator->setItemCountPerPage(10);
+        
         return new ViewModel(
                 array(
-                    'employees' => $this->getEmployeesTable()->fetchAll(),
+                    'employees' => $paginator,
                 )
             );
     }
 
-    public function editAction()     
-     {
-        
-         $id = (int)$this->params()->fromRoute('id', 0);
+    public function editAction()
+    {
+        $error = '';
+        $id = (int)$this->params()->fromRoute('id', 0);
          
          if (!$id) {
              return $this->redirect()->toRoute('employees', array(
@@ -64,7 +76,8 @@ class EmployeesController extends AbstractActionController
          }
          
          try { 
-             $employee = $this->getEmployeesTable()->getEmployees($id);   
+             $employee = $this->getEmployeesTable()->getEmployees($id);
+             $employee->commission_pct *= 100;
          }
          catch (\Exception $ex) {   
              return $this->redirect()->toRoute('employees', array(
@@ -76,8 +89,8 @@ class EmployeesController extends AbstractActionController
         $departments=$this->getDepartmentsTable()->fetchAll();
         $employees = $this->getEmployeesTable()->fetchAll();
         //**
-        
-        
+
+
          $form = new EmployeesForm($jobs,$departments,$employees);  
          
          //Associa os dados do formulario
@@ -91,47 +104,62 @@ class EmployeesController extends AbstractActionController
              $form->setInputFilter($employee->getInputFilter());
              $form->setData($request->getPost());            
              if ($form->isValid()) {
-                 $this->getEmployeesTable()->updateEmployees($employee);
+                 try {
+                    $this->getEmployeesTable()->updateEmployees($employee);
+                    
+                    return $this->redirect()->toRoute('employees');
+                 } catch (\Exception $exc) {
+                     $error = $exc->getMessage();
+                 }
+
+
+
                  
-                 
-                 return $this->redirect()->toRoute('employees');
              }
          }
          
          return array(
              'employee_id' => $id,
              'form' => $form,
+             'error' => $error,
          );
-     }   
+             
+    }
 
     public function deleteAction()
-     {
-         $id = (int) $this->params()->fromRoute('id', 0);
-         if (!$id) {
-             return $this->redirect()->toRoute('employees');
-         }
-         
-         $request = $this->getRequest();
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('employees');
+        }
+
+        $request = $this->getRequest();
+                
+        if ($request->isPost()) {
+            $del = $request->getPost('del', 'No');
+            
+            if ($del == 'Yes') {
+                $id = (int) $request->getPost('id');
+                $this->getEmployeesTable()->deleteEmployees($id);
+            }
+
+            // Redirect to list of albums
+            return $this->redirect()->toRoute('employees');
+        }
+        try {
+            $employee = $this->getEmployeesTable()->getEmployees($id);
+        } catch (\Exception $exc) {
+            $this->redirect()->toRoute('employees');
+        }
+
         
-         if ($request->isPost()) {
-             $del = $request->getPost('del', 'No');
-             
-             if ($del == 'Yes') {
-                 $id = (int) $request->getPost('id');
-                 $this->getEmployeesTable()->deleteEmployees($id);
-             }
+        
+        return array(
+            'id'    => $id,
+            'employees' => $this->getEmployeesTable()->getEmployees($id)
+        );
+    }
 
-             // Redirect to list of albums
-             return $this->redirect()->toRoute('employees');
-         }
-
-         return array(
-             'id'    => $id,
-             'employees' => $this->getEmployeesTable()->getEmployees($id)
-         );
-     }
-     
-     
     public function insertAction()
     {
         return new ViewModel(
@@ -142,8 +170,9 @@ class EmployeesController extends AbstractActionController
                
             ));
     }
+
     public function addAction()
-     {
+    {
         $jobs=$this->getJobsTable()->fetchAll();
         $departments=$this->getDepartmentsTable()->fetchAll();
         $employees =$this->getEmployeesTable()->fetchAll();
@@ -152,7 +181,7 @@ class EmployeesController extends AbstractActionController
          $form->get('submit')->setValue('Add');
 
          $request = $this->getRequest();
-        
+
          if ($request->isPost()) {
              $employee = new Employees();
              $form->setInputFilter($employee->getInputFilter());
@@ -168,6 +197,23 @@ class EmployeesController extends AbstractActionController
              }
          }
          return array('form' => $form);
-     }
+    }
+
+    public function detailsAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('employees');
+        }
+        
+        
+        return new ViewModel(
+                array(
+                    'employees' => $this->getEmployeesTable()->getEmployeeAll($id),
+                )
+            );
+    }
+
+
 }
 

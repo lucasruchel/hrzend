@@ -2,9 +2,12 @@
 
 namespace Countries\Model;
 
+use Exception;
+use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\TableGateway\TableGateway;
-use Zend\Db\Sql\Select;
-use Zend\Db\ResultSet\ResultSet;
+use Zend\Paginator\Adapter\DbSelect;
+use Zend\Paginator\Paginator;
+use Zend\Stdlib\Hydrator\ObjectProperty;
 
 class CountriesTable{
 
@@ -16,10 +19,30 @@ class CountriesTable{
         $this->tableGateway = $tableGateway;
     }
     
-    public function fetchAll(){
+    public function fetchAll($paginated=null){
         $select = $this->tableGateway->getSql()->select();
-        $select->join('regions', 'countries.region_id = regions.region_id');
+        $select->join('regions', 'countries.region_id = regions.region_id')
+               ->order('country_id');
 
+         if($paginated){
+            
+            
+            $resultSetPrototype = new HydratingResultSet();
+            $resultSetPrototype->setHydrator(new ObjectProperty());
+            
+             $paginatorAdapter = new DbSelect(
+                 
+                 $select,
+                 
+                 $this->tableGateway->getAdapter(),
+                 
+                 $resultSetPrototype
+             );
+             
+             $paginator = new Paginator($paginatorAdapter);
+             return $paginator;
+        }
+        
         $resultSet = $this->tableGateway->selectWith($select);
         
         return $resultSet;
@@ -37,7 +60,7 @@ class CountriesTable{
         $rowset = $this->tableGateway->select(array('country_id' => $id));
         $row = $rowset->current();
         if (!$row) {
-            throw new \Exception("Could not find row $id");
+            throw new Exception("Could not find row $id");
         }
         return $row;
     }

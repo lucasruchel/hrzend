@@ -48,21 +48,6 @@ class Module
                      
                      return new TableGateway('countries', $dbAdapter, null, $resultSetPrototype);
                 },
-                        'Regions\Model\RegionsTable' =>  function($sm) {
-                     $tableGateway = $sm->get('RegionsTableGateway');
-                     $table = new RegionsTable($tableGateway);
-                     return $table;
-                 },
-                 'RegionsTableGateway' => function ($sm) {
-                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                     
-                     
-                     $resultSetPrototype = new HydratingResultSet();
-                     $resultSetPrototype->setHydrator(new ObjectProperty());
-                     $resultSetPrototype->setObjectPrototype(new Regions());
-                     
-                     return new TableGateway('regions', $dbAdapter, null, $resultSetPrototype);
-                },
             ),
         );
     }

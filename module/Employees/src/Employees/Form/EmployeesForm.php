@@ -29,6 +29,7 @@ namespace Employees\Form;
          $this->add(array(
              'name' => 'first_name',
              'type' => 'Text',
+             'required' => TRUE,
              'options' => array(
                  'label' => 'Primeiro Nome',
              ),
@@ -39,6 +40,7 @@ namespace Employees\Form;
          ));
          $this->add(array(
              'name' => 'last_name',
+             'type' => 'Text',
              'type' => 'Text',
              'options' => array(
                  'label' => 'Ultimo Nome',
@@ -74,7 +76,7 @@ namespace Employees\Form;
         
          $this->add(array(
              'name' => 'salary',
-             'type' => 'Text',
+             'type' => 'Number',
              'options' => array(
                  'label' => 'Salario',
              ),
@@ -168,7 +170,7 @@ namespace Employees\Form;
     {
         $selectData = array();       
         foreach ($this->employees as $employee){
-            $selectData[$employee->employee_id] = $employee->first_name;
+            $selectData[$employee->employee_id] = $employee->full_name;
         }
         //carrego mais ainda deu um erro
         //esse erro deve ser pera

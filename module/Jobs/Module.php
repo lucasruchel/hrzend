@@ -2,7 +2,7 @@
 namespace Jobs;
  use Jobs\Model\Jobs;
  
- use Jobs\Model\JobsTable;
+  use Jobs\Model\JobsTable;
 
  use Zend\Db\TableGateway\TableGateway;
 

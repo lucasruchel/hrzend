@@ -16,7 +16,7 @@
  <?php
  $url = $this->url('countries', array(
      'action' => 'delete',
-     'id'     => $this->country->country_id,
+     'id'     => preg_replace('/\s+/', '',$this->country->country_id),
      
  ));
 
@@ -24,7 +24,7 @@
  <form action="<?php echo $url; ?>" method="post">
  <div
      <div class="form-group hidden">
-         <input type="hidden" name="id" value="<?php echo $this->country->country_id; ?>" />
+         <input type="hidden" name="id" value="<?php echo preg_replace('/\s+/', '',$this->country->country_id); ?>" />
      </div>
         
      <div class="form-group">

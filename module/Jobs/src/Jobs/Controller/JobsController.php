@@ -22,9 +22,14 @@ class JobsController extends AbstractActionController
 
         public function indexAction()
     {
+        $paginator = $this->getJobsTable()->fetchAll(true);
+     
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+     
+        $paginator->setItemCountPerPage(10);
         return new ViewModel(
                 array(
-                    'jobs' => $this->getJobsTable()->fetchAll(),
+                    'jobs' => $paginator,
                 )
             );
     }

@@ -31,7 +31,7 @@ class LocationsForm extends Form{
                 ),
                 'attributes' => array(
                     'placeholder' => 'Digite o endereço da rua',
-                    'required' => 'required',
+                    
                     'class' => 'form-control'
                 ),
         ));
@@ -50,6 +50,7 @@ class LocationsForm extends Form{
         $this->add(array(
                 'type' => '\Zend\Form\Element\Text',
                 'name' => 'state_province',
+                'required' => false,
                 'options' => array(
                     'label' => 'Nome do estado/provincia'
                 ),
@@ -67,7 +68,7 @@ class LocationsForm extends Form{
                 ),
                 'attributes' => array(
                     'placeholder' => 'Digite o código postal',
-                    'required' => 'required',
+                    
                     'class' => 'form-control'
                 ),
         ));
@@ -84,7 +85,7 @@ class LocationsForm extends Form{
                 'options' => array(
                    'label' => 'Selecione a região',
                    
-                   'empty_option' => 'Por favor escolha uma região',
+                   'empty_option' => 'Por favor escolha um país',
                    'value_options' => $this->getCountriesOptions(),
                 )
         ));

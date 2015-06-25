@@ -43,6 +43,15 @@
     echo $this->formElementErrors($name);
 ?>
  </div> 
+ <div class="form-group">
+<?php
+    $name = $form->get('sub_department');
+    echo $this->formLabel($name);
+    echo $this->formElement($name);
+    echo $this->formElementErrors($name);
+?>
+   <label class='importante'>Apenas escolher um departamento Chefe se estiver cadastrando um sub_departamento </label>
+ </div>     
 <?php echo $this->formSubmit($form->get('submit')); ?>
      
 <a  class="btn btn-info" href="<?php echo $this->url('departments',array('action'=>'index'));?>"> Cancelar </a>  
