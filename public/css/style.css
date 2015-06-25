@@ -44,3 +44,6 @@ div.container a.brand {
 .navbar{
     background-color: #03A9F4 !important;
 }
+.navbar > .container *{
+    color: #fff;
+}

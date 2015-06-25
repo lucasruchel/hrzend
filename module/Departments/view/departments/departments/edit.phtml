@@ -58,9 +58,12 @@
     echo $this->formElement($name);
     echo $this->formElementErrors($name);
 ?>
-    <label class='importante'>Apenas escolher um DEPARTAMENTO CHEFE se estiver cadastrando um sub_departamento </label>
- </div>
      
+    
+ </div>
+     <div class="form-group">
+         <label class='form-group alert-danger form-control text-center'>Apenas escolher um DEPARTAMENTO CHEFE se estiver cadastrando um Sub departamento </label>
+     </div> 
 <?php echo $this->formSubmit($form->get('submit')); ?>
      
 <a  class="btn btn-info" href="<?php echo $this->url('departments',array('action'=>'index'));?>"> Cancelar </a>  

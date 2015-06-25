@@ -40,10 +40,21 @@ class Countries implements InputFilterAwareInterface{
                          'name'    => 'StringLength',
                          'options' => array(
                              'encoding' => 'UTF-8',
-                             'min'      => 1,
+                             'min'      => 2,
                              'max'      => 2,
                          ),
                      ),
+                     array(
+                        'name' => 'Regex',
+                        'options' => array(
+                            'pattern' => '/[a-zA-Z]{2}/',
+                            'messages' => array(
+                            
+                            'regexNotMatch' => "'%value%' não corresponde com o padrão esperado (2 letras) ",
+                            
+                             ),
+                    ),
+)
                  ),
              ));
             $inputFilter->add(array(
